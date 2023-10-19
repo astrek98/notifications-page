@@ -2,7 +2,8 @@
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('http://127.0.0.1:5173/notifications-page/');
+  // await page.goto('http://127.0.0.1:5173/notifications-page/');
+  await page.goto('https://astrek98.github.io/notifications-page/');
 });
 
 test('has title', async ({ page }) => {
