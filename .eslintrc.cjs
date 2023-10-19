@@ -49,6 +49,12 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/member-delimiter-style': 'off',
   },
-  ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts', 'tailwind.config.js', 'postcss.config.js'],
+  ignorePatterns: [
+    '.eslintrc.cjs',
+    'vite.config.ts',
+    'tailwind.config.js',
+    'postcss.config.js',
+  ],
 };
