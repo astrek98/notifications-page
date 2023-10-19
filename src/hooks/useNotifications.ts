@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Mark from '../assets/images/avatar-mark-webber.webp';
 import Angela from '../assets/images/avatar-angela-gray.webp';
 import Jacob from '../assets/images/avatar-jacob-thompson.webp';
@@ -9,7 +9,7 @@ import Anna from '../assets/images/avatar-anna-kim.webp';
 import ImageChess from '../assets/images/image-chess.webp';
 
 export function useNotifications() {
-  const [notifications] = useState([
+  const [notifications, setNotifications] = useState([
     {
       id: 7,
       type: {
@@ -132,5 +132,25 @@ export function useNotifications() {
     },
   ]);
 
-  return { notifications };
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    setUnreadCount(notifications.filter(({ read }) => !read).length);
+  }, [notifications]);
+
+  const markAllAsRead = () => {
+    setNotifications((notifications) =>
+      notifications.map((notification) => ({ ...notification, read: true }))
+    );
+  };
+
+  const markAsRead = (id: number) => {
+    setNotifications((notifications) =>
+      notifications.map((notification) =>
+        notification.id === id ? { ...notification, read: true } : notification
+      )
+    );
+  };
+
+  return { notifications, unreadCount, markAllAsRead, markAsRead };
 }

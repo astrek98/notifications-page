@@ -9,11 +9,15 @@ export function App() {
 }
 
 function Notifications() {
-  const { notifications } = useNotifications();
+  const { notifications, unreadCount, markAllAsRead, markAsRead } =
+    useNotifications();
 
   return (
     <div className="bg-white sm:m-10 w-full max-w-[39rem] p-4 rounded-lg flex flex-col gap-5">
-      <NotificationsHeader />
+      <NotificationsHeader
+        unreadCount={unreadCount}
+        markAllAsRead={markAllAsRead}
+      />
 
       <section className="flex flex-col gap-2 h-full overflow-y-auto">
         {notifications.map(({ id, type, user, read, createdAt }) => {
@@ -24,6 +28,11 @@ function Notifications() {
               user={user}
               read={read}
               createdAt={createdAt}
+              onClick={() => {
+                if (!read) {
+                  markAsRead(id);
+                }
+              }}
             />
           );
         })}
@@ -32,7 +41,13 @@ function Notifications() {
   );
 }
 
-function NotificationsHeader() {
+function NotificationsHeader({
+  unreadCount,
+  markAllAsRead,
+}: {
+  unreadCount?: number;
+  markAllAsRead: () => void;
+}) {
   return (
     <header className="flex justify-between items-center gap-1">
       <h1>
@@ -41,10 +56,13 @@ function NotificationsHeader() {
         </span>
         &nbsp;
         <span className=" ml-2 px-2.5 py-0.5 rounded text-white bg-[#073478] font-semibold text-sm">
-          3
+          {unreadCount}
         </span>
       </h1>
-      <button className="text-[#8C8F98] text-sm hover:text-[#073478]">
+      <button
+        className="text-[#8C8F98] text-sm hover:text-[#073478]"
+        onClick={markAllAsRead}
+      >
         Mark all as read
       </button>
     </header>
@@ -115,15 +133,18 @@ function Username({ children }: { children: React.ReactNode }) {
 
 function NotificationContainer({
   read = false,
+  onClick,
   children,
 }: {
   read?: boolean;
+  onClick?: () => void;
   children: React.ReactNode;
 }) {
   const bgClass = read ? 'bg-white' : 'bg-[#F6FAFD]';
   return (
     <article
       className={`flex gap-4 ${bgClass} p-4 rounded-md h-full] hover:cursor-pointer`}
+      onClick={onClick}
     >
       {children}
     </article>
@@ -136,9 +157,9 @@ function NotificationImage({ src }: { src: string }) {
   );
 }
 
-function Notification({ type, user, read, createdAt }: any) {
+function Notification({ type, user, read, createdAt, onClick }: any) {
   return (
-    <NotificationContainer read={read}>
+    <NotificationContainer read={read} onClick={onClick}>
       <Avatar src={user.avatar} alt={user.name} />
       <div className="flex justify-between w-full gap-3">
         <div className="flex flex-col gap-0.5">
