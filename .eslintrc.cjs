@@ -24,7 +24,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    'space-before-function-paren': ['warn', 'never'],
+    'space-before-function-paren': 'off',
     '@typescript-eslint/space-before-function-paren': ['warn', 'never'],
     semi: ['warn', 'always'],
     '@typescript-eslint/semi': ['warn', 'always'],
@@ -56,5 +56,7 @@ module.exports = {
     'vite.config.ts',
     'tailwind.config.js',
     'postcss.config.js',
+    'tests-examples/**/*',
+    'playwright.config.ts',
   ],
 };

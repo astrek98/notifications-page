@@ -11,7 +11,10 @@ export function NotificationsHeader({ unreadCount, markAllAsRead }: Props) {
           Notifications
         </span>
         &nbsp;
-        <span className="ml-2 px-2.5 py-0.5 rounded text-white bg-[#073478] font-semibold text-sm">
+        <span
+          className="ml-2 px-2.5 py-0.5 rounded text-white bg-[#073478] font-semibold text-sm"
+          role="status"
+        >
           {unreadCount}
         </span>
       </h1>
